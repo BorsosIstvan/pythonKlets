@@ -17,7 +17,7 @@ def read_chat_history():
     except FileNotFoundError:
         print("Chatgeschiedenisbestand niet gevonden.")
     except json.JSONDecodeError as e:
-        print(f"Fout bij het decoderen van JSON:")
+        print(f"Fout bij het decoderen van JSON: {str(e)}")
 
     return chat_history
 
@@ -84,17 +84,6 @@ def start_server():
         print(f"{username} is toegetreden tot de chat.")
 
         clients.append((username, client_socket))
-
-        # Stuur de chatgeschiedenis naar de nieuw aangemelde gebruiker
-        chat_history = read_chat_history()
-        for entry in chat_history:
-            message = f"{entry['username']}: {entry['message']}"
-            try:
-                client_socket.send(message.encode('utf-8'))
-            except Exception as e:
-                print(f"Fout bij het verzenden van bericht naar {username}: {str(e)}")
-                break
-
         client_handler = threading.Thread(target=handle_client, args=(client_socket, username))
         client_handler.start()
 
