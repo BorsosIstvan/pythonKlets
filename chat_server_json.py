@@ -17,7 +17,7 @@ def read_chat_history():
     except FileNotFoundError:
         print("Chatgeschiedenisbestand niet gevonden.")
     except json.JSONDecodeError as e:
-        print(f"Fout bij het decoderen van JSON: {str(e)}")
+        print(f"Fout bij het decoderen van JSON:")
 
     return chat_history
 
