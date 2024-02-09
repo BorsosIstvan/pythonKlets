@@ -11,7 +11,7 @@ def receive_messages():
             break
 
 client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-client_socket.connect(('localhost', 5555))
+client_socket.connect(('poci.n-soft.net', 5555))
 
 # Vraag de gebruiker om een gebruikersnaam in te voeren
 username = input("Voer je gebruikersnaam in: ")
