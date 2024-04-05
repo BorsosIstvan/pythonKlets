@@ -3,30 +3,31 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Server Message Demo</title>
+    <title>Message Reverse Demo</title>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 <body>
-    <h1>Bericht van de server:</h1>
-    <div id="message-container"></div>
+    <h1>Stuur een bericht naar de server:</h1>
+    <input type="text" id="message-input" placeholder="Voer hier je bericht in">
+    <button onclick="sendMessage()">Verstuur</button>
+
+    <h2>Bericht ontvangen van de server:</h2>
+    <div id="reversed-message-container"></div>
 
     <script>
-        // Functie om bericht van de server op te halen
-        function getMessage() {
-            $.get("/message", function(data) {
-                var message = data.message;
-                $('#message-container').text(message);
-
-                // Verwijder het bericht na 10 seconden
-                setTimeout(function() {
-                    $('#message-container').text('');
-                }, 10000); // 10 seconden in milliseconden
+        function sendMessage() {
+            var message = $('#message-input').val();
+            $.ajax({
+                url: "/send_message",
+                type: "POST",
+                contentType: "application/json",
+                data: JSON.stringify({message: message}),
+                success: function(response) {
+                    var reversedMessage = response.reversed_message;
+                    $('#reversed-message-container').text(reversedMessage);
+                }
             });
         }
-
-        // Haal het bericht op bij het laden van de pagina en elke 30 seconden
-        getMessage();
-        setInterval(getMessage, 30000); // Elke 30 seconden vernieuwen
     </script>
 </body>
 </html>
