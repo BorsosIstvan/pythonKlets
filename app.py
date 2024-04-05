@@ -3,7 +3,7 @@ from flask_socketio import SocketIO
 import time
 
 app = Flask(__name__)
-socketio = SocketIO(app, cors_allowed_origins="*", async_mode="threading", logger=True, engineio_logger=True, async_handlers=True, port=8080)
+socketio = SocketIO(app, cors_allowed_origins="*", async_mode="threading", logger=True, engineio_logger=True, async_handlers=True, port=3000)
 
 # Indexpagina
 @app.route('/')
