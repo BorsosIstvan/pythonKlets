@@ -2,32 +2,26 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Chat Server</title>
+    <title>Server Message Demo</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 <body>
-    <ul id="messages"></ul>
-    <form id="form" action="">
-        <input id="message_input" autocomplete="off" /><button>Send</button>
-    </form>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js"></script>
+    <h1>Bericht van de server:</h1>
+    <div id="message-container"></div>
+
     <script>
-        var socket = io.connect('http://' + document.domain + ':' + location.port);
+        // Functie om bericht van de server op te halen
+        function getMessage() {
+            $.get("/message", function(data) {
+                var message = data.message;
+                $('#message-container').text(message);
+            });
+        }
 
-        socket.on('message', function(data) {
-            var ul = document.getElementById('messages');
-            var li = document.createElement('li');
-            li.appendChild(document.createTextNode(data));
-            ul.appendChild(li);
-        });
-
-        document.getElementById('form').onsubmit = function() {
-            var input = document.getElementById('message_input');
-            socket.emit('message', input.value);
-            input.value = '';
-            return false;
-        };
+        // Haal het bericht op bij het laden van de pagina en elke 30 seconden
+        getMessage();
+        setInterval(getMessage, 30000); // Elke 30 seconden vernieuwen
     </script>
 </body>
 </html>
