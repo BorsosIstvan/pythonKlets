@@ -3,31 +3,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Message Reverse Demo</title>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <title>Server Messages Demo</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.1.0/socket.io.js"></script>
 </head>
 <body>
-    <h1>Stuur een bericht naar de server:</h1>
-    <input type="text" id="message-input" placeholder="Voer hier je bericht in">
-    <button onclick="sendMessage()">Verstuur</button>
-
-    <h2>Bericht ontvangen van de server:</h2>
-    <div id="reversed-message-container"></div>
+    <h1>Ontvangen berichten van de server:</h1>
+    <ul id="message-list"></ul>
 
     <script>
-        function sendMessage() {
-            var message = $('#message-input').val();
-            $.ajax({
-                url: "/send_message",
-                type: "POST",
-                contentType: "application/json",
-                data: JSON.stringify({message: message}),
-                success: function(response) {
-                    var reversedMessage = response.reversed_message;
-                    $('#reversed-message-container').text(reversedMessage);
-                }
-            });
-        }
+        var socket = io.connect('http://' + document.domain + ':' + location.port);
+
+        // Luister naar berichten van de server
+        socket.on('server_message', function(data) {
+            var message = data.message;
+            var messageList = document.getElementById('message-list');
+            var listItem = document.createElement('li');
+            listItem.textContent = message;
+            messageList.appendChild(listItem);
+        });
     </script>
 </body>
 </html>
