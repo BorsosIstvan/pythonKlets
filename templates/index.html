@@ -16,6 +16,11 @@
             $.get("/message", function(data) {
                 var message = data.message;
                 $('#message-container').text(message);
+
+                // Verwijder het bericht na 10 seconden
+                setTimeout(function() {
+                    $('#message-container').text('');
+                }, 10000); // 10 seconden in milliseconden
             });
         }
 
