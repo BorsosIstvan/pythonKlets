@@ -16,7 +16,7 @@ def send_message():
     return jsonify({'message': message})
 
 @app.route('/send_message', methods=['POST'])
-def send_message():
+def resend_message():
     data = request.get_json()
     message = data.get('message', '')
     reversed_message = message[::-1]  # Keer het bericht om
