@@ -3,7 +3,7 @@ from flask_socketio import SocketIO
 import time
 
 app = Flask(__name__)
-socketio = SocketIO(app, cors_allowed_origins="*", async_mode="threading", logger=True, engineio_logger=True, async_handlers=True)
+socketio = SocketIO(app, cors_allowed_origins="*", async_mode="threading", logger=True, engineio_logger=True, async_handlers=True, port=8080)
 
 # Indexpagina
 @app.route('/')
@@ -24,4 +24,4 @@ def handle_connect():
     send_messages()
 
 if __name__ == '__main__':
-    socketio.run(app, host='0.0.0.0', port=8080)
+    socketio.run(app, host='0.0.0.0', port=8000)
