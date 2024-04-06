@@ -16,7 +16,7 @@ def send_messages():
     while True:
         socketio.emit('server_message', {'message': f"Dit is bericht {count}"})
         count += 1
-        time.sleep(2)  # Wacht 10 seconden tussen elk bericht
+        time.sleep(10)  # Wacht 10 seconden tussen elk bericht
 
 # Start het verzenden van berichten wanneer de server wordt gestart
 @socketio.on('connect')
